@@ -2,3 +2,4 @@
 
 githubSecret = ""
 slackUrl = 'https://hooks.slack.com/services/XXXXXX'
+slackChannel = "#activity"
