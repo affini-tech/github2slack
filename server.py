@@ -3,9 +3,11 @@ from flask import request
 import json
 import requests
 
+import config as cfg
+
 app = Flask(__name__)
 
-slackUrl = 'https://hooks.slack.com/services/XXXXXX'
+#slackUrl = 'https://hooks.slack.com/services/XXXXXX'
 
 @app.route('/')
 def root():
@@ -22,7 +24,7 @@ def github_webhook():
                 msg = "%s on repo %s :\n '%s'\n%s " % (c['committer']['name'],r,c['message'],c['url'])
                 print msg
                 payload={"channel": "#activity","username": "github","text": msg}
-                requests.post(slackUrl, json.dumps(payload), headers={'content-type': 'application/json'})
+                requests.post(cfg.slackUrl, json.dumps(payload), headers={'content-type': 'application/json'})
         return 'ok'
 
 if __name__ == "__main__":
