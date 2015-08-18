@@ -23,7 +23,7 @@ def github_webhook():
         for c in j['commits']:
                 msg = "%s on repo %s :\n '%s'\n%s " % (c['committer']['name'],r,c['message'],c['url'])
                 print msg
-                payload={"channel": "#activity","username": "github","text": msg}
+                payload={"channel": cfg.slackChannel,"username": "github","text": msg}
                 requests.post(cfg.slackUrl, json.dumps(payload), headers={'content-type': 'application/json'})
         return 'ok'
 
