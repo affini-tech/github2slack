@@ -20,11 +20,15 @@ def github_webhook():
         j = json.loads(d)
         r = j['repository']['name']
         print '----'
+
         for c in j['commits']:
-                msg = "%s on repo %s :\n '%s'\n%s " % (c['committer']['name'],r,c['message'],c['url'])
-                print msg
-                payload={"channel": cfg.slackChannel,"username": "github","text": msg}
-                requests.post(cfg.slackUrl, json.dumps(payload), headers={'content-type': 'application/json'})
+                if not '--q' in c['message']:
+			msg = "%s on repo %s :\n '%s'\n%s " % (c['committer']['name'],r,c['message'],c['url'])
+			print msg
+			payload={"channel": "#activity","username": "github","text": msg}
+			url = 'https://hooks.slack.com/services/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'
+			requests.post(url, json.dumps(payload), headers={'content-type': 'application/json'})
+	
         return 'ok'
 
 if __name__ == "__main__":
